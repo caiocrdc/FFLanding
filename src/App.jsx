@@ -32,15 +32,15 @@ const locations = [
     hours: 'Seg–Sex: 08:00–12:00 e 14:00–19:00; Sáb–Dom: 08:00–12:00 e 14:00–18:00',
     crf: 'CRF-CE nº 9012',
   },
-  {
-    title: 'Ibicuitaba',
-    tag: 'Posto de Medicamentos',
-    popular: false,
-    address: 'Rua Coronel Ricardo de Holanda – Ibicuitaba, Icapuí – CE',
-    mapsUrl: 'https://maps.app.goo.gl/TwFUpcG5MjtRqq8u8',
-    hours: 'Seg–Sex: 07:00–12:00 e 14:00–19:00; Finais de semana: Fechado',
-    crf: 'CRF-CE nº 5678',
-  },
+    {
+      title: 'Ibicuitaba',
+      tag: 'Posto de Medicamentos',
+      popular: false,
+      address: 'Rua Coronel Ricardo de Holanda – Ibicuitaba, Icapuí – CE',
+      mapsUrl: 'https://maps.app.goo.gl/TwFUpcG5MjtRqq8u8',
+      hours: 'Seg–Sex: 07:00–12:00 e 14:00–19:00; Finais de semana: Fechado',
+      crf: 'CRF-CE nº 5678',
+    },
 ]
 
 function FarmaciaPopularBadge({ compact = false }) {
@@ -59,17 +59,17 @@ function FarmaciaPopularBadge({ compact = false }) {
 const highlights = [
   {
     title: 'Atendimento Humanizado',
-    description: 'Você é tratado com atenção, respeito e acolhimento.',
+    description: 'Você é tratado com atenção, respeito e acolhimento',
     icon: FaHeart,
   },
   {
     title: 'Produtos de Qualidade',
-    description: 'Medicamentos e insumos com procedência garantida.',
+    description: 'Medicamentos e insumos com procedência garantida',
     icon: FaCheckCircle,
   },
   {
     title: 'Equipe Especializada',
-    description: 'Profissionais dedicados a oferecer o melhor cuidado.',
+    description: 'Profissionais dedicados a oferecer o melhor cuidado',
     icon: FaUsers,
   },
 ]
@@ -184,10 +184,10 @@ function App() {
                 Farmácia com credibilidade e acolhimento
               </div>
               <h1 className="max-w-2xl text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-                Sua saúde em boas mãos.
+                Sua saúde em boas mãos
               </h1>
               <p className="mt-4 max-w-xl text-lg text-white/90 sm:text-xl">
-                Atendimento humanizado, produtos de qualidade e uma equipe comprometida com o cuidado da sua família.
+                Atendimento humanizado, produtos de qualidade e uma equipe comprometida com o cuidado da sua família
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -234,10 +234,10 @@ function App() {
             <FarmaciaPopularBadge />
           </div>
           <h2 className="text-3xl font-bold text-[#1b4d1e] sm:text-4xl">
-            Aqui tem Farmácia Popular.
+            Aqui tem Farmácia Popular
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-[#5a6a5f]">
-            Nossa unidade do Centro é credenciada ao programa, oferecendo medicamentos gratuitos ou com até 90% de desconto para você e sua família.
+            Nossa unidade do Centro é credenciada ao programa, oferecendo medicamentos gratuitos ou com até 90% de desconto para você e sua família
           </p>
           <a
             href="https://www.gov.br/saude/farmaciapopular"
@@ -255,10 +255,10 @@ function App() {
           <div className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2e7d32]">Nossas unidades</p>
             <h2 className="mt-3 text-3xl font-bold text-[#1b4d1e] sm:text-4xl">
-              Estamos presentes onde você precisa.
+              Estamos presentes onde você precisa
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-[#5a6a5f]">
-              Encontre a unidade mais conveniente e fale com nossa equipe para atendimento rápido.
+              Encontre a unidade mais conveniente e fale com nossa equipe para atendimento rápido
             </p>
           </div>
 
@@ -331,7 +331,7 @@ function App() {
         <div className="mx-auto flex max-w-7xl flex-col gap-6 text-center text-[#5a6a5f] md:flex-row md:items-center md:justify-between md:text-left">
           <div>
             <p className="text-lg font-semibold text-[#1b4d1e]">Fernandes Farma</p>
-            <p className="mt-1 text-sm">Cuidando de você com acolhimento e profissionalismo.</p>
+            <p className="mt-1 text-sm">Cuidando de você com acolhimento e profissionalismo</p>
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm md:justify-end">
             <a href="#inicio" className="transition hover:text-[#2e7d32]">Início</a>
