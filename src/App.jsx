@@ -13,17 +13,13 @@ import {
 
 const WHATSAPP_URL = 'https://wa.me/5588996849190'
 
-function buildMapsUrl(plusCode) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(plusCode)}`
-}
-
 const locations = [
   {
     title: 'Centro',
     tag: 'Farmácia',
     popular: true,
     address: 'Rua Zé Biru, 1321 – Centro, Icapuí – CE',
-    plusCode: '7JQV+3W Icapuí, Ceará',
+    mapsUrl: 'https://maps.app.goo.gl/kxfjrDKhFsRT4Ny86',
     hours: 'Seg–Sáb: 07:00–21:00; Dom: 08:00–12:00 e 16:00–20:00',
     crf: 'CRF-CE nº 1234',
   },
@@ -32,7 +28,7 @@ const locations = [
     tag: 'Posto de Medicamentos',
     popular: false,
     address: 'Rua Coronel Ricardo de Holanda – Ibicuitaba, Icapuí – CE',
-    plusCode: '7M6P+8F Ibicuitaba, Icapuí - CE',
+    mapsUrl: 'https://maps.app.goo.gl/TwFUpcG5MjtRqq8u8',
     hours: 'Seg–Sex: 07:00–12:00 e 14:00–19:00; Finais de semana: Fechado',
     crf: 'CRF-CE nº 5678',
   },
@@ -41,7 +37,7 @@ const locations = [
     tag: 'Farmácia',
     popular: false,
     address: 'Estrada da Serra de Redonda, S/N – Redonda, Icapuí – CE',
-    plusCode: '8GXF+9Q Icapuí, Ceará',
+    mapsUrl: 'https://maps.app.goo.gl/3MVxVKgSChWoD9e77',
     hours: 'Seg–Sex: 08:00–12:00 e 14:00–19:00; Sáb–Dom: 08:00–12:00 e 14:00–18:00',
     crf: 'CRF-CE nº 9012',
   },
@@ -305,7 +301,7 @@ function App() {
 
                     <div className="mt-8 flex flex-col gap-3">
                       <a
-                        href={buildMapsUrl(unit.plusCode)}
+                        href={unit.mapsUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition hover:scale-[0.98] active:scale-95"
