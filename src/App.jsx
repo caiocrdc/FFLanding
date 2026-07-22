@@ -24,15 +24,6 @@ const locations = [
     crf: 'CRF-CE nº 1234',
   },
   {
-    title: 'Ibicuitaba',
-    tag: 'Posto de Medicamentos',
-    popular: false,
-    address: 'Rua Coronel Ricardo de Holanda – Ibicuitaba, Icapuí – CE',
-    mapsUrl: 'https://maps.app.goo.gl/TwFUpcG5MjtRqq8u8',
-    hours: 'Seg–Sex: 07:00–12:00 e 14:00–19:00; Finais de semana: Fechado',
-    crf: 'CRF-CE nº 5678',
-  },
-  {
     title: 'Redonda',
     tag: 'Farmácia',
     popular: false,
@@ -40,6 +31,15 @@ const locations = [
     mapsUrl: 'https://maps.app.goo.gl/3MVxVKgSChWoD9e77',
     hours: 'Seg–Sex: 08:00–12:00 e 14:00–19:00; Sáb–Dom: 08:00–12:00 e 14:00–18:00',
     crf: 'CRF-CE nº 9012',
+  },
+  {
+    title: 'Ibicuitaba',
+    tag: 'Posto de Medicamentos',
+    popular: false,
+    address: 'Rua Coronel Ricardo de Holanda – Ibicuitaba, Icapuí – CE',
+    mapsUrl: 'https://maps.app.goo.gl/TwFUpcG5MjtRqq8u8',
+    hours: 'Seg–Sex: 07:00–12:00 e 14:00–19:00; Finais de semana: Fechado',
+    crf: 'CRF-CE nº 5678',
   },
 ]
 
