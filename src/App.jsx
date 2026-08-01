@@ -8,6 +8,7 @@ import {
   FaMapMarkerAlt,
   FaPills,
   FaShieldAlt,
+  FaTags,
   FaTimes,
   FaUsers,
   FaWhatsapp,
@@ -44,7 +45,7 @@ const locations = [
     address: 'Rua Coronel Ricardo de Holanda – Ibicuitaba, Icapuí – CE',
     mapsUrl: 'https://maps.app.goo.gl/TwFUpcG5MjtRqq8u8',
     hours: 'Seg–Sex: 07:00–12:00 e 14:00–19:00; Finais de semana: Fechado',
-    crf: 'CRF-CE nº 5678',
+    // No CRF here on purpose — a "posto de medicamentos" isn't required to have one.
   },
 ]
 
@@ -57,6 +58,15 @@ function FarmaciaPopularBadge({ compact = false }) {
     >
       <FaPills className={compact ? 'text-xs' : 'text-sm'} />
       Farmácia Popular
+    </span>
+  )
+}
+
+function PbmBadge() {
+  return (
+    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-[#1565c0] via-[#1976d2] to-[#1e88e5] px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-white shadow-[0_4px_12px_rgba(21,101,192,0.35)]">
+      <FaTags className="text-sm" />
+      PBM
     </span>
   )
 }
@@ -81,7 +91,7 @@ const highlights = [
 
 const navLinks = [
   { href: '#inicio', label: 'Início' },
-  { href: '#popular', label: 'Farmácia Popular' },
+  { href: '#convenios', label: 'Convênios Aceitos' },
   { href: '#unidades', label: 'Nossas Unidades' },
 ]
 
@@ -290,8 +300,8 @@ function App() {
             <a href="#inicio" className="text-sm font-semibold text-[#2e7d32]">
               Início
             </a>
-            <a href="#popular" className="text-sm text-[#455547] transition hover:text-[#2e7d32]">
-              Farmácia Popular
+            <a href="#convenios" className="text-sm text-[#455547] transition hover:text-[#2e7d32]">
+              Convênios Aceitos
             </a>
             <a href="#unidades" className="text-sm text-[#455547] transition hover:text-[#2e7d32]">
               Nossas Unidades
@@ -384,7 +394,7 @@ function App() {
                   Encontre sua unidade
                 </a>
                 <a
-                  href="#popular"
+                  href="#convenios"
                   className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur transition hover:bg-white/20"
                 >
                   Veja mais sobre a farmácia
@@ -415,25 +425,53 @@ function App() {
         </div>
       </section>
 
-      <section id="popular" className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl rounded-[28px] border border-[#dfe7df] bg-white p-8 text-center shadow-sm sm:p-12">
-          <div className="mb-5 flex justify-center">
-            <FarmaciaPopularBadge />
+      <section id="convenios" className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-10 text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2e7d32]">Convênios Aceitos</p>
+            <h2 className="mt-3 text-3xl font-bold text-[#1b4d1e] sm:text-4xl">
+              Programas que ajudam no seu bolso
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-[#5a6a5f]">
+              Participamos de programas que tornam seus medicamentos mais acessíveis.
+            </p>
           </div>
-          <h2 className="text-3xl font-bold text-[#1b4d1e] sm:text-4xl">
-            Aqui tem Farmácia Popular
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-[#5a6a5f]">
-            Nossa unidade do Centro é credenciada ao programa, oferecendo medicamentos gratuitos ou com até 90% de desconto para você e sua família
-          </p>
-          <a
-            href="https://www.gov.br/saude/farmaciapopular"
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-[#2e7d32] px-7 py-3 font-semibold text-white transition hover:scale-[0.98]"
-          >
-            Saiba mais sobre o programa
-          </a>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-[28px] border border-[#dfe7df] bg-white p-8 text-center shadow-sm">
+              <div className="mb-5 flex justify-center">
+                <FarmaciaPopularBadge />
+              </div>
+              <h3 className="text-2xl font-bold text-[#1b4d1e]">Aqui tem Farmácia Popular</h3>
+              <p className="mx-auto mt-4 max-w-md text-[#5a6a5f]">
+                Nossa unidade do Centro é credenciada ao programa, oferecendo medicamentos gratuitos ou com até 90% de desconto para você e sua família.
+              </p>
+              <a
+                href="https://www.gov.br/saude/farmaciapopular"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-8 inline-flex items-center justify-center rounded-full bg-[#2e7d32] px-7 py-3 font-semibold text-white transition hover:scale-[0.98]"
+              >
+                Saiba mais sobre o programa
+              </a>
+            </div>
+
+            <div className="rounded-[28px] border border-[#dfe7df] bg-white p-8 text-center shadow-sm">
+              <div className="mb-5 flex justify-center">
+                <PbmBadge />
+              </div>
+              <h3 className="text-2xl font-bold text-[#1b4d1e]">PBM — Descontos em Medicamentos</h3>
+              <p className="mx-auto mt-4 max-w-md text-[#5a6a5f]">
+                Também participamos do PBM (Programa de Benefício em Medicamentos), com descontos oferecidos pelos laboratórios em diversos medicamentos de uso contínuo.
+              </p>
+              <a
+                href="#unidades"
+                className="mt-8 inline-flex items-center justify-center rounded-full border border-[#2e7d32] bg-white px-7 py-3 font-semibold text-[#2e7d32] transition hover:bg-[#f1f8f2]"
+              >
+                Consulte na sua unidade
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -480,36 +518,44 @@ function App() {
                         <FaClock className="mt-1 shrink-0 text-[#2e7d32]" />
                         <p className="text-sm">{unit.hours}</p>
                       </div>
-                      <div className="flex items-start gap-3">
-                        <FaCheckCircle className="mt-1 shrink-0 text-[#2e7d32]" />
-                        <p className="text-sm font-medium text-[#1b4d1e]">{unit.crf}</p>
-                      </div>
+                      {unit.crf ? (
+                        <div className="flex items-start gap-3">
+                          <FaCheckCircle className="mt-1 shrink-0 text-[#2e7d32]" />
+                          <p className="text-sm font-medium text-[#1b4d1e]">{unit.crf}</p>
+                        </div>
+                      ) : null}
                     </div>
 
-                    <div className="mt-8 flex flex-col gap-3">
-                      <a
-                        href={unit.mapsUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition hover:scale-[0.98] active:scale-95"
-                      >
-                        <FaMapMarkerAlt className="h-4 w-4" />
-                        Ver no Mapa
-                      </a>
-                      <a
-                        href={WHATSAPP_URL}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#2e7d32] bg-white px-5 py-3 text-sm font-semibold text-[#2e7d32] transition hover:bg-[#f1f8f2] active:scale-95"
-                      >
-                        <FaWhatsapp className="h-4 w-4" />
-                        Entrar em contato
-                      </a>
-                    </div>
+                    <a
+                      href={unit.mapsUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition hover:scale-[0.98] active:scale-95"
+                    >
+                      <FaMapMarkerAlt className="h-4 w-4" />
+                      Ver no Mapa
+                    </a>
                   </article>
                 </div>
               )
             })}
+          </div>
+
+          {/* Shared WhatsApp contact — replaces the old per-card buttons, since they all pointed to the same number anyway. */}
+          <div className="mt-8 flex flex-col items-center gap-4 rounded-[26px] border border-[#dfe7df] bg-white p-6 text-center shadow-sm sm:flex-row sm:justify-between sm:p-8 sm:text-left">
+            <div>
+              <h3 className="text-lg font-semibold text-[#1b4d1e]">Prefere falar direto com a gente?</h3>
+              <p className="mt-1 text-sm text-[#5a6a5f]">Fale com nossa equipe pelo WhatsApp e tire suas dúvidas rapidinho.</p>
+            </div>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#2e7d32] bg-white px-6 py-3 text-sm font-semibold text-[#2e7d32] transition hover:bg-[#f1f8f2] active:scale-95 sm:w-auto"
+            >
+              <FaWhatsapp className="h-4 w-4" />
+              Falar no WhatsApp
+            </a>
           </div>
         </div>
       </section>
@@ -523,7 +569,7 @@ function App() {
           <div className="flex flex-wrap justify-center gap-4 text-sm md:justify-end">
             <a href="#inicio" className="transition hover:text-[#2e7d32]">Início</a>
             <a href="#unidades" className="transition hover:text-[#2e7d32]">Unidades</a>
-            <a href="#popular" className="transition hover:text-[#2e7d32]">Farmácia Popular</a>
+            <a href="#convenios" className="transition hover:text-[#2e7d32]">Convênios Aceitos</a>
           </div>
         </div>
       </footer>
