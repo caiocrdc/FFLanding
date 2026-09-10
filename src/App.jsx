@@ -79,7 +79,7 @@ const navLinks = [
   { href: '#unidades', label: 'Nossas Unidades' },
 ]
 
-function InstagramLinks({ onNavigate }) {
+function InstagramLinks({ onNavigate, isOpen = true }) {
   return (
     <>
       <a
@@ -87,6 +87,7 @@ function InstagramLinks({ onNavigate }) {
         target="_blank"
         rel="noreferrer"
         onClick={onNavigate}
+        tabIndex={isOpen ? 0 : -1}
         className="block rounded-lg px-3 py-3 text-sm leading-snug text-[#1b4d1e] transition hover:bg-[#f1f8f2] active:bg-[#e9f4ea]"
       >
         <span className="block font-semibold">Instagram Matriz (Centro)</span>
@@ -97,6 +98,7 @@ function InstagramLinks({ onNavigate }) {
         target="_blank"
         rel="noreferrer"
         onClick={onNavigate}
+        tabIndex={isOpen ? 0 : -1}
         className="mt-1 block rounded-lg px-3 py-3 text-sm leading-snug text-[#1b4d1e] transition hover:bg-[#f1f8f2] active:bg-[#e9f4ea]"
       >
         <span className="block font-semibold">Instagram Filial (Redonda)</span>
@@ -141,9 +143,37 @@ function useWindowSize() {
   return size
 }
 
+function useScrollReveal() {
+  const elementRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element || typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true)
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        observer.disconnect()
+      }
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+
+  return [elementRef, isVisible]
+}
+
 function App() {
   const isDesktop = useIsDesktop()
   const windowSize = useWindowSize()
+  const [conveniosRef, conveniosVisible] = useScrollReveal()
+  const [unidadesRef, unidadesVisible] = useScrollReveal()
+  const [footerRef, footerVisible] = useScrollReveal()
 
   const [igOpen, setIgOpen] = useState(false)
   const igRef = useRef(null)
@@ -276,7 +306,17 @@ function App() {
   const bubbleY = dragPos ? dragPos.y : snappedY
 
   return (
-    <div className="min-h-screen bg-[#f8faf8] text-[#1f2a1f]">
+    <div className="relative isolate min-h-screen overflow-x-clip bg-[#f8faf8] text-[#1f2a1f]">
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute -left-32 top-[24%] h-96 w-96 rounded-[46%_54%_62%_38%] bg-gradient-to-br from-[#b8e7c5]/30 to-[#9ed0dc]/15 blur-3xl motion-safe:animate-[convenios-drift_11s_ease-in-out_infinite]" />
+        <div className="absolute -right-28 top-[62%] h-80 w-80 rounded-[54%_46%_38%_62%] bg-gradient-to-tl from-[#9ed0dc]/25 to-[#b8e7c5]/10 blur-3xl motion-safe:animate-[convenios-drift_13s_ease-in-out_infinite_reverse]" />
+        <div className="absolute left-[9%] top-[42%] hidden h-16 w-16 -rotate-12 items-center justify-center rounded-full border border-white/70 bg-white/30 text-[#75b9c7]/40 shadow-[0_10px_26px_rgba(18,60,53,0.08)] backdrop-blur-md motion-safe:animate-[convenios-drift_9s_ease-in-out_infinite] lg:flex">
+          <FaPills className="text-xl" />
+        </div>
+        <div className="absolute right-[16%] top-[78%] hidden h-12 w-12 rotate-12 items-center justify-center rounded-full border border-white/70 bg-white/25 text-[#b8e7c5]/70 shadow-[0_10px_26px_rgba(18,60,53,0.08)] backdrop-blur-md motion-safe:animate-[convenios-drift_10s_ease-in-out_infinite_reverse] md:flex">
+          <FaPills className="text-base" />
+        </div>
+      </div>
       <header className="sticky top-0 z-50 border-b border-[#dfe7df] bg-[#f8faf8]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <a href="#inicio" className="flex items-center gap-3">
@@ -315,22 +355,24 @@ function App() {
                 {menuOpen ? <FaTimes className="h-5 w-5" /> : <FaBars className="h-5 w-5" />}
               </button>
 
-              {menuOpen ? (
-                <div className="absolute right-0 z-50 mt-2 w-60 max-w-[calc(100vw-2rem)] rounded-xl border border-[#dfe7df] bg-white p-2 shadow-lg">
-                  {navLinks.map((link, index) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMenuOpen(false)}
-                      className={`block rounded-lg px-3 py-3 text-sm leading-snug transition hover:bg-[#f1f8f2] active:bg-[#e9f4ea] ${
-                        index === 0 ? 'font-semibold text-[#2e7d32]' : 'text-[#455547] hover:text-[#2e7d32]'
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              ) : null}
+              <div
+                className={`menu-popover absolute right-0 z-50 mt-2 w-60 max-w-[calc(100vw-2rem)] rounded-xl border border-white/70 bg-white p-2 shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md ${menuOpen ? 'menu-popover-open' : ''}`}
+                aria-hidden={!menuOpen}
+              >
+                {navLinks.map((link, index) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    tabIndex={menuOpen ? 0 : -1}
+                    className={`block rounded-lg px-3 py-3 text-sm leading-snug transition hover:bg-[#e7f4eb] active:bg-[#d8eddf] ${
+                      index === 0 ? 'font-semibold text-[#1b5e20]' : 'text-[#455547] hover:text-[#2e7d32]'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Instagram button in the header — desktop only. On mobile it's replaced by the draggable floating bubble below. */}
@@ -347,11 +389,12 @@ function App() {
                   <FaInstagram className="h-5 w-5" />
                 </button>
 
-                {igOpen ? (
-                  <div className="absolute right-0 z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] rounded-xl border border-[#dfe7df] bg-white p-2 shadow-lg sm:w-80">
-                    <InstagramLinks onNavigate={() => setIgOpen(false)} />
-                  </div>
-                ) : null}
+                <div
+                  className={`instagram-popover absolute right-0 z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/70 bg-white p-2 shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md sm:w-80 ${igOpen ? 'instagram-popover-open' : ''}`}
+                  aria-hidden={!igOpen}
+                >
+                  <InstagramLinks onNavigate={() => setIgOpen(false)} isOpen={igOpen} />
+                </div>
               </div>
             ) : null}
           </div>
@@ -359,8 +402,8 @@ function App() {
       </header>
 
       <section id="inicio" className="relative overflow-hidden px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
-        <div className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#b7e4d1]/50 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-[#b7d9e4]/45 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#b7e4d1]/50 blur-3xl motion-safe:animate-[hero-atmosphere_14s_ease-in-out_infinite]" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-[#8fd0ac]/35 blur-3xl motion-safe:animate-[hero-atmosphere_17s_ease-in-out_infinite_reverse]" />
         <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem_3.5rem_2rem_3.5rem] border border-white/70 bg-[#123c35] shadow-[0_24px_70px_rgba(18,60,53,0.2)] sm:rounded-[2.5rem_4.5rem_2.5rem_4.5rem]">
           <div className="relative min-h-[480px] overflow-hidden sm:min-h-[540px] lg:min-h-[650px]">
             <img
@@ -369,8 +412,9 @@ function App() {
               className="absolute inset-0 h-full w-full object-cover object-[58%_center] transition-transform duration-[1200ms] ease-out hover:scale-105"
             />
             <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(8,47,39,0.94)_0%,rgba(18,60,53,0.76)_43%,rgba(18,60,53,0.18)_100%)]" />
+            <div className="hero-gradient-motion pointer-events-none absolute inset-0" />
             <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[#a8e0c2]/25 blur-3xl motion-safe:animate-[hero-float_9s_ease-in-out_infinite]" />
-            <div className="pointer-events-none absolute bottom-[-7rem] left-[38%] h-80 w-80 rounded-full bg-[#75b9c7]/20 blur-3xl motion-safe:animate-[hero-float_12s_ease-in-out_infinite_reverse]" />
+            <div className="pointer-events-none absolute bottom-[-7rem] left-[38%] h-80 w-80 rounded-full bg-[#78c49a]/20 blur-3xl motion-safe:animate-[hero-float_12s_ease-in-out_infinite_reverse]" />
 
             <div className="relative z-10 flex h-full min-h-[480px] flex-col justify-center px-6 py-12 text-white sm:min-h-[540px] sm:px-10 sm:py-14 lg:min-h-[650px] lg:px-16 lg:py-20">
               <div className="mb-7 inline-flex w-fit items-center rounded-full border border-white/25 bg-white/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#e2f5e9] shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md">
@@ -402,7 +446,11 @@ function App() {
         </div>
       </section>
 
-      <section id="convenios" className="relative isolate overflow-x-clip px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <section
+        id="convenios"
+        ref={conveniosRef}
+        className={`reveal-section relative isolate overflow-x-clip px-4 py-16 sm:px-6 lg:px-8 lg:py-24 ${conveniosVisible ? 'is-visible' : ''}`}
+      >
         <div className="pointer-events-none absolute -right-20 top-12 -z-10 h-72 w-72 rounded-[46%_54%_62%_38%] bg-gradient-to-br from-[#b8e7c5]/70 to-[#9ed0dc]/30 blur-2xl motion-safe:animate-[convenios-drift_8s_ease-in-out_infinite]" />
         <div className="pointer-events-none absolute right-[13%] top-28 -z-10 hidden h-20 w-20 rotate-12 items-center justify-center rounded-full border border-white/80 bg-white/45 text-[#2e7d32]/50 shadow-[0_12px_30px_rgba(27,77,30,0.1)] backdrop-blur-md motion-safe:animate-[convenios-drift_6s_ease-in-out_infinite_reverse] md:flex">
           <FaPills className="text-2xl" />
@@ -447,17 +495,27 @@ function App() {
                 Também participamos do PBM (Programa de Benefício em Medicamentos), com descontos oferecidos pelos laboratórios em diversos medicamentos de uso contínuo.
               </p>
               <a
-                href="#unidades"
+                href="https://pbm.portaldadrogaria.com.br/blog/pbm-tudo-o-que-voce-precisa-saber"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-8 inline-flex items-center justify-center rounded-full border border-[#75b9c7]/60 bg-white/45 px-7 py-3 font-semibold text-[#123c35] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#75b9c7] hover:bg-white/70"
               >
-                Consulte na sua unidade
+                Saiba mais sobre o programa
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="unidades" className="px-4 py-4 pb-16 sm:px-6 lg:px-8">
+      <section
+        id="unidades"
+        ref={unidadesRef}
+        className={`reveal-section relative isolate overflow-x-clip px-4 py-4 pb-16 sm:px-6 lg:px-8 ${unidadesVisible ? 'is-visible' : ''}`}
+      >
+        <div className="pointer-events-none absolute -right-24 top-16 -z-10 h-72 w-72 rounded-[54%_46%_38%_62%] bg-gradient-to-bl from-[#9ed0dc]/35 to-[#b8e7c5]/15 blur-3xl motion-safe:animate-[convenios-drift_10s_ease-in-out_infinite_reverse]" />
+        <div className="pointer-events-none absolute left-[7%] top-28 -z-10 hidden h-14 w-14 -rotate-12 items-center justify-center rounded-full border border-white/80 bg-white/35 text-[#75b9c7]/45 shadow-[0_10px_26px_rgba(18,60,53,0.08)] backdrop-blur-md motion-safe:animate-[convenios-drift_8s_ease-in-out_infinite] lg:flex">
+          <FaPills className="text-lg" />
+        </div>
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2e7d32]">Nossas unidades</p>
@@ -553,7 +611,11 @@ function App() {
         </div>
       </section>
 
-      <footer className="border-t border-[#dfe7df] bg-[#e9f4ea] px-4 py-8 sm:px-6 lg:px-8">
+      <footer
+        ref={footerRef}
+        className={`reveal-section relative isolate overflow-hidden border-t border-[#dfe7df] bg-[#e9f4ea] px-4 py-8 sm:px-6 lg:px-8 ${footerVisible ? 'is-visible' : ''}`}
+      >
+        <div className="pointer-events-none absolute -bottom-28 left-[18%] h-64 w-64 rounded-[46%_54%_62%_38%] bg-gradient-to-tr from-[#9ed0dc]/25 to-[#b8e7c5]/20 blur-3xl motion-safe:animate-[convenios-drift_12s_ease-in-out_infinite]" />
         <div className="mx-auto flex max-w-7xl flex-col gap-6 text-center text-[#5a6a5f] md:flex-row md:items-center md:justify-between md:text-left">
           <div>
             <p className="text-lg font-semibold text-[#1b4d1e]">Fernandes Farma</p>
@@ -576,15 +638,14 @@ function App() {
           className={`fixed z-50 ${!dragPos && igSnap === 'center' ? '-translate-x-1/2' : ''}`}
           style={{ left: `${bubbleX}px`, top: `${bubbleY}px` }}
         >
-          {igOpen ? (
-            <div
-              className={`absolute bottom-full z-50 mb-2 w-72 max-w-[calc(100vw-2rem)] rounded-xl border border-[#dfe7df] bg-white p-2 shadow-lg sm:w-80 ${
-                igSnap === 'right' ? 'right-0' : igSnap === 'left' ? 'left-0' : 'left-1/2 -translate-x-1/2'
-              }`}
-            >
-              <InstagramLinks onNavigate={() => setIgOpen(false)} />
-            </div>
-          ) : null}
+          <div
+            className={`instagram-popover absolute bottom-full z-50 mb-2 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/70 bg-white p-2 shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md sm:w-80 ${
+              igSnap === 'right' ? 'right-0' : igSnap === 'left' ? 'left-0' : 'left-1/2 -translate-x-1/2'
+            } ${igOpen ? 'instagram-popover-open' : ''}`}
+            aria-hidden={!igOpen}
+          >
+            <InstagramLinks onNavigate={() => setIgOpen(false)} isOpen={igOpen} />
+          </div>
 
           <button
             onPointerDown={handleBubblePointerDown}

@@ -26,6 +26,70 @@ body {
   overflow-x: clip;
 }
 
+.menu-popover {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -8px, 0) scale(0.96);
+  transform-origin: top right;
+  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+  visibility: hidden;
+}
+
+.menu-popover-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+  visibility: visible;
+}
+
+.instagram-popover {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -8px, 0) scale(0.96);
+  transform-origin: top right;
+  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+  visibility: hidden;
+}
+
+.instagram-popover-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instagram-popover {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-popover {
+    transition: none;
+  }
+}
+
+.reveal-section {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+}
+
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-section,
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 @keyframes hero-float {
   0%,
   100% {
@@ -33,6 +97,43 @@ body {
   }
   50% {
     transform: translate3d(18px, -14px, 0) scale(1.06);
+  }
+}
+
+@keyframes hero-atmosphere {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(12px, -9px, 0) scale(1.05);
+  }
+}
+
+.hero-gradient-motion {
+  background: linear-gradient(
+    115deg,
+    transparent 12%,
+    rgba(143, 208, 172, 0.08) 38%,
+    rgba(184, 231, 197, 0.18) 50%,
+    rgba(117, 185, 199, 0.06) 62%,
+    transparent 86%
+  );
+  background-size: 220% 220%;
+  animation: hero-gradient-sweep 12s ease-in-out infinite;
+}
+
+@keyframes hero-gradient-sweep {
+  0%,
+  100% {
+    background-position: 12% 50%;
+    opacity: 0.35;
+  }
+  50% {
+    background-position: 88% 50%;
+    opacity: 0.85;
   }
 }
 
