@@ -1,3 +1,5 @@
+import logo from '../assets/logo-fernandes-farma.png'
+
 export default function FooterSection({ sectionRef, isVisible }) {
   return (
     <footer
@@ -9,7 +11,7 @@ export default function FooterSection({ sectionRef, isVisible }) {
         <div>
           <div className="flex items-center justify-center gap-3 md:justify-start">
             <img
-              src="/logo-fernandes-farma.png"
+              src={logo}
               alt="Fernandes Farma"
               className="h-12 w-auto max-w-[175px] object-contain"
             />

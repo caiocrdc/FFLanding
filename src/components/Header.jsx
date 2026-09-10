@@ -1,6 +1,7 @@
 import { FaBars, FaInstagram, FaTimes } from 'react-icons/fa'
 import InstagramLinks from './InstagramLinks'
 import { navLinks } from '../data/siteData'
+import logo from '../assets/logo-fernandes-farma.png'
 
 export default function Header({
   isDesktop,
@@ -16,7 +17,7 @@ export default function Header({
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <a href="#inicio" className="flex items-center gap-3">
           <img
-            src="/logo-fernandes-farma.png"
+            src={logo}
             alt="Fernandes Farma"
             className="h-9 w-auto max-w-[145px] object-contain sm:h-10"
           />
