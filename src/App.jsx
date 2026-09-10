@@ -3,14 +3,12 @@ import {
   FaBars,
   FaCheckCircle,
   FaClock,
-  FaHeart,
   FaInstagram,
   FaMapMarkerAlt,
   FaPills,
   FaShieldAlt,
   FaTags,
   FaTimes,
-  FaUsers,
   FaWhatsapp,
 } from 'react-icons/fa'
 
@@ -62,32 +60,18 @@ function FarmaciaPopularBadge({ compact = false }) {
   )
 }
 
-function PbmBadge() {
+function PbmBadge({ compact = false }) {
   return (
-    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-[#1565c0] via-[#1976d2] to-[#1e88e5] px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-white shadow-[0_4px_12px_rgba(21,101,192,0.35)]">
-      <FaTags className="text-sm" />
+    <span
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-[#1565c0] via-[#1976d2] to-[#1e88e5] font-semibold uppercase tracking-[0.15em] text-white shadow-[0_4px_12px_rgba(21,101,192,0.35)] ${
+        compact ? 'px-2.5 py-1 text-[10px]' : 'px-4 py-2 text-xs'
+      }`}
+    >
+      <FaTags className={compact ? 'text-xs' : 'text-sm'} />
       PBM
     </span>
   )
 }
-
-const highlights = [
-  {
-    title: 'Atendimento Humanizado',
-    description: 'Você é tratado com atenção, respeito e acolhimento',
-    icon: FaHeart,
-  },
-  {
-    title: 'Produtos de Qualidade',
-    description: 'Medicamentos e insumos com procedência garantida',
-    icon: FaCheckCircle,
-  },
-  {
-    title: 'Equipe Especializada',
-    description: 'Profissionais dedicados a oferecer o melhor cuidado',
-    icon: FaUsers,
-  },
-]
 
 const navLinks = [
   { href: '#inicio', label: 'Início' },
@@ -169,7 +153,7 @@ function App() {
 
   // Which edge the floating bubble is snapped to, and its vertical position.
   // igY = null means "default", i.e. anchored near the bottom.
-  const [igSnap, setIgSnap] = useState('right') // 'left' | 'right'
+  const [igSnap, setIgSnap] = useState('center') // 'left' | 'center' | 'right'
   const [igY, setIgY] = useState(null)
   // Position used only while actively dragging (follows the finger/cursor freely).
   const [dragPos, setDragPos] = useState(null)
@@ -259,9 +243,16 @@ function App() {
     event.currentTarget.releasePointerCapture(event.pointerId)
 
     if (state.moved && dragPos) {
-      // Snap to whichever edge (left/right) the bubble is closest to on release.
-      const center = dragPos.x + BUBBLE_SIZE / 2
-      setIgSnap(center < window.innerWidth / 2 ? 'left' : 'right')
+      // Preserve the floating composition by snapping to the nearest of three horizontal anchors.
+      const anchors = {
+        left: EDGE_MARGIN,
+        center: window.innerWidth / 2 - BUBBLE_SIZE / 2,
+        right: window.innerWidth - BUBBLE_SIZE - EDGE_MARGIN,
+      }
+      const nearestAnchor = Object.entries(anchors).reduce((nearest, [name, x]) => (
+        Math.abs(dragPos.x - x) < Math.abs(dragPos.x - anchors[nearest]) ? name : nearest
+      ), 'center')
+      setIgSnap(nearestAnchor)
       setIgY(dragPos.y)
       setDragPos(null)
     } else if (!state.moved) {
@@ -273,7 +264,9 @@ function App() {
   // recalculated from the current window size so it can never end up off-screen after a resize.
   const snappedX = igSnap === 'right'
     ? windowSize.width - BUBBLE_SIZE - EDGE_MARGIN
-    : EDGE_MARGIN
+    : igSnap === 'left'
+      ? EDGE_MARGIN
+      : windowSize.width / 2 - BUBBLE_SIZE / 2
 
   const defaultY = windowSize.height - BUBBLE_SIZE - EDGE_MARGIN
   const maxY = windowSize.height - BUBBLE_SIZE - EDGE_MARGIN
@@ -365,37 +358,41 @@ function App() {
         </div>
       </header>
 
-      <section id="inicio" className="px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-[32px] shadow-[0_20px_60px_rgba(27,77,30,0.16)]">
-          <div className="relative min-h-[420px] overflow-hidden sm:min-h-[500px] lg:min-h-[640px]">
+      <section id="inicio" className="relative overflow-hidden px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <div className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#b7e4d1]/50 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-[#b7d9e4]/45 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem_3.5rem_2rem_3.5rem] border border-white/70 bg-[#123c35] shadow-[0_24px_70px_rgba(18,60,53,0.2)] sm:rounded-[2.5rem_4.5rem_2.5rem_4.5rem]">
+          <div className="relative min-h-[480px] overflow-hidden sm:min-h-[540px] lg:min-h-[650px]">
             <img
               src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1400&q=80"
               alt="Ambiente profissional de farmácia"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-[58%_center] transition-transform duration-[1200ms] ease-out hover:scale-105"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(11,41,14,0.9)_0%,rgba(27,77,30,0.7)_50%,rgba(27,77,30,0.25)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(8,47,39,0.94)_0%,rgba(18,60,53,0.76)_43%,rgba(18,60,53,0.18)_100%)]" />
+            <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[#a8e0c2]/25 blur-3xl motion-safe:animate-[hero-float_9s_ease-in-out_infinite]" />
+            <div className="pointer-events-none absolute bottom-[-7rem] left-[38%] h-80 w-80 rounded-full bg-[#75b9c7]/20 blur-3xl motion-safe:animate-[hero-float_12s_ease-in-out_infinite_reverse]" />
 
-            <div className="relative z-10 flex h-full min-h-[420px] flex-col justify-center px-6 py-10 text-white sm:min-h-[500px] sm:px-8 sm:py-12 lg:min-h-[640px] lg:px-12 lg:py-16">
-              <div className="mb-6 inline-flex w-fit items-center rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
+            <div className="relative z-10 flex h-full min-h-[480px] flex-col justify-center px-6 py-12 text-white sm:min-h-[540px] sm:px-10 sm:py-14 lg:min-h-[650px] lg:px-16 lg:py-20">
+              <div className="mb-7 inline-flex w-fit items-center rounded-full border border-white/25 bg-white/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#e2f5e9] shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md">
                 <FaShieldAlt className="mr-2 text-base" />
                 Farmácia com credibilidade e acolhimento
               </div>
-              <h1 className="max-w-2xl text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
                 Sua saúde em boas mãos
               </h1>
-              <p className="mt-4 max-w-xl text-lg text-white/90 sm:text-xl">
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-xl">
                 Atendimento humanizado, produtos de qualidade e uma equipe comprometida com o cuidado da sua família
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="#unidades"
-                  className="inline-flex items-center justify-center rounded-full bg-[#2e7d32] px-7 py-3 font-semibold text-white transition hover:scale-[0.98]"
+                  className="inline-flex items-center justify-center rounded-full bg-[#b8e7c5] px-7 py-3.5 font-bold text-[#123c35] shadow-[0_10px_28px_rgba(184,231,197,0.22)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#d4f2da] hover:shadow-[0_16px_34px_rgba(184,231,197,0.3)] active:translate-y-0"
                 >
                   Encontre sua unidade
                 </a>
                 <a
                   href="#convenios"
-                  className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur transition hover:bg-white/20"
+                  className="inline-flex items-center justify-center rounded-full border border-white/35 bg-white/10 px-7 py-3.5 font-semibold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:bg-white/18 active:translate-y-0"
                 >
                   Veja mais sobre a farmácia
                 </a>
@@ -405,40 +402,25 @@ function App() {
         </div>
       </section>
 
-      <section className="border-y border-[#dfe7df] bg-[#e9f4ea] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 lg:flex-row lg:justify-center lg:gap-10">
-          {highlights.map((item) => {
-            const Icon = item.icon
-
-            return (
-              <div key={item.title} className="flex items-start gap-3 rounded-2xl bg-white/80 p-4 shadow-sm">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#dbeedc] text-[#2e7d32]">
-                  <Icon className="text-2xl" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-[#1b4d1e]">{item.title}</h2>
-                  <p className="mt-1 text-sm text-[#5a6a5f]">{item.description}</p>
-                </div>
-              </div>
-            )
-          })}
+      <section id="convenios" className="relative isolate overflow-visible px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="pointer-events-none absolute -right-20 top-12 -z-10 h-72 w-72 rounded-[46%_54%_62%_38%] bg-gradient-to-br from-[#b8e7c5]/70 to-[#9ed0dc]/30 blur-2xl motion-safe:animate-[convenios-drift_8s_ease-in-out_infinite]" />
+        <div className="pointer-events-none absolute right-[13%] top-28 -z-10 hidden h-20 w-20 rotate-12 items-center justify-center rounded-full border border-white/80 bg-white/45 text-[#2e7d32]/50 shadow-[0_12px_30px_rgba(27,77,30,0.1)] backdrop-blur-md motion-safe:animate-[convenios-drift_6s_ease-in-out_infinite_reverse] md:flex">
+          <FaPills className="text-2xl" />
         </div>
-      </section>
 
-      <section id="convenios" className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-10 text-center">
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mb-12 max-w-2xl lg:ml-10">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2e7d32]">Convênios Aceitos</p>
-            <h2 className="mt-3 text-3xl font-bold text-[#1b4d1e] sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold leading-tight text-[#1b4d1e] sm:text-4xl lg:text-5xl">
               Programas que ajudam no seu bolso
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-[#5a6a5f]">
+            <p className="mt-4 max-w-xl text-lg text-[#5a6a5f]">
               Participamos de programas que tornam seus medicamentos mais acessíveis.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-[28px] border border-[#dfe7df] bg-white p-8 text-center shadow-sm">
+          <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr] md:items-start md:gap-0">
+            <div className="relative z-10 rounded-[28px_40px_28px_40px] border border-[#dfe7df] bg-white p-8 text-center shadow-[0_18px_42px_rgba(27,77,30,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(27,77,30,0.15)] md:mt-8">
               <div className="mb-5 flex justify-center">
                 <FarmaciaPopularBadge />
               </div>
@@ -456,7 +438,7 @@ function App() {
               </a>
             </div>
 
-            <div className="rounded-[28px] border border-[#dfe7df] bg-white p-8 text-center shadow-sm">
+            <div className="relative z-20 rounded-[36px_24px_36px_24px] border border-white/80 bg-[#eff9f1]/90 p-8 text-center shadow-[0_22px_52px_rgba(27,77,30,0.14)] backdrop-blur-md transition-all duration-300 hover:-translate-y-3 hover:shadow-[0_28px_58px_rgba(27,77,30,0.18)] md:-ml-8 md:-mt-4 lg:-ml-16">
               <div className="mb-5 flex justify-center">
                 <PbmBadge />
               </div>
@@ -496,41 +478,54 @@ function App() {
               return (
                 <div
                   key={unit.title}
-                  className={`rounded-[26px] p-[2px] shadow-sm ${borderGradient}`}
+                  className={unit.popular
+                    ? 'rounded-[26px] bg-gradient-to-br from-[#c62828] via-[#d32f2f] to-[#b71c1c] p-[2px] shadow-sm'
+                    : `rounded-[26px] p-[2px] shadow-sm ${borderGradient}`}
                 >
                   <article className="flex h-full flex-col rounded-[24px] bg-white p-6 sm:p-7">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#2e7d32]">
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#708078]">
                           {unit.tag}
                         </p>
-                        <h3 className="mt-2 text-2xl font-semibold text-[#1b4d1e]">{unit.title}</h3>
+                        <h3 className="mt-2 text-3xl font-bold tracking-[-0.02em] text-[#1b4d1e]">{unit.title}</h3>
                       </div>
-                      {unit.popular ? <FarmaciaPopularBadge compact /> : null}
-                    </div>
-
-                    <div className="mt-6 flex-1 space-y-4 text-[#5a6a5f]">
-                      <div className="flex items-start gap-3">
-                        <FaMapMarkerAlt className="mt-1 shrink-0 text-[#2e7d32]" />
-                        <p className="font-semibold text-[#1b4d1e]">{unit.address}</p>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <FaClock className="mt-1 shrink-0 text-[#2e7d32]" />
-                        <p className="text-sm">{unit.hours}</p>
-                      </div>
-                      {unit.crf ? (
-                        <div className="flex items-start gap-3">
-                          <FaCheckCircle className="mt-1 shrink-0 text-[#2e7d32]" />
-                          <p className="text-sm font-medium text-[#1b4d1e]">{unit.crf}</p>
+                      {unit.popular ? (
+                        <div className="flex flex-wrap items-center gap-2">
+                          <FarmaciaPopularBadge compact />
+                          <PbmBadge compact />
                         </div>
                       ) : null}
+                    </div>
+
+                    <div className="mt-8 flex-1 text-[#5a6a5f]">
+                      <div className="flex items-start gap-3">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f1f5f1] text-[#2e7d32]">
+                          <FaMapMarkerAlt className="text-sm" />
+                        </span>
+                        <p className="pt-1 font-semibold leading-relaxed text-[#1b4d1e]">{unit.address}</p>
+                      </div>
+                      <div className="mt-7 space-y-4 border-t border-[#e8eee9] pt-5">
+                        <div className="flex items-start gap-3">
+                          <FaClock className="mt-1 shrink-0 text-[#839188]" />
+                          <p className="text-sm leading-relaxed">{unit.hours}</p>
+                        </div>
+                        {unit.crf ? (
+                          <div className="flex items-start gap-3">
+                            <FaCheckCircle className="mt-1 shrink-0 text-[#839188]" />
+                            <p className="text-sm leading-relaxed">{unit.crf}</p>
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
 
                     <a
                       href={unit.mapsUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition hover:scale-[0.98] active:scale-95"
+                      className={unit.popular
+                        ? 'mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#d5e2d7] bg-[#f7faf7] px-5 py-3.5 text-sm font-semibold text-[#1b5e20] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2e7d32] hover:bg-[#eef7ef] active:scale-95'
+                        : 'mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition-all duration-300 hover:scale-[0.98] active:scale-95'}
                     >
                       <FaMapMarkerAlt className="h-4 w-4" />
                       Ver no Mapa
@@ -580,13 +575,13 @@ function App() {
       {!isDesktop ? (
         <div
           ref={igRef}
-          className="fixed z-50"
+          className={`fixed z-50 ${!dragPos && igSnap === 'center' ? '-translate-x-1/2' : ''}`}
           style={{ left: `${bubbleX}px`, top: `${bubbleY}px` }}
         >
           {igOpen ? (
             <div
               className={`absolute bottom-full z-50 mb-2 w-72 max-w-[calc(100vw-2rem)] rounded-xl border border-[#dfe7df] bg-white p-2 shadow-lg sm:w-80 ${
-                igSnap === 'right' ? 'right-0' : 'left-0'
+                igSnap === 'right' ? 'right-0' : igSnap === 'left' ? 'left-0' : 'left-1/2 -translate-x-1/2'
               }`}
             >
               <InstagramLinks onNavigate={() => setIgOpen(false)} />
@@ -598,7 +593,7 @@ function App() {
             onPointerMove={handleBubblePointerMove}
             onPointerUp={finishDrag}
             onPointerCancel={finishDrag}
-            className="flex h-14 w-14 touch-none select-none items-center justify-center rounded-full bg-[#2e7d32] text-white shadow-[0_8px_24px_rgba(27,77,30,0.35)] transition-transform active:scale-95"
+            className="motion-safe:animate-[bubble-float_5s_ease-in-out_infinite] flex h-16 w-16 touch-none select-none items-center justify-center rounded-[45%_55%_52%_48%] bg-[#2e7d32] text-white shadow-[0_14px_34px_rgba(27,77,30,0.32)] transition-transform duration-300 active:scale-95"
             aria-label="Instagram"
             aria-expanded={igOpen}
             aria-haspopup="true"
