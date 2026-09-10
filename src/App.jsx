@@ -183,7 +183,7 @@ function App() {
 
   // Which edge the floating bubble is snapped to, and its vertical position.
   // igY = null means "default", i.e. anchored near the bottom.
-  const [igSnap, setIgSnap] = useState('right') // 'left' | 'center' | 'right'
+  const [igSnap, setIgSnap] = useState('right') // 'left' | 'right'
   const [igY, setIgY] = useState(null)
   // Position used only while actively dragging (follows the finger/cursor freely).
   const [dragPos, setDragPos] = useState(null)
@@ -273,16 +273,9 @@ function App() {
     event.currentTarget.releasePointerCapture(event.pointerId)
 
     if (state.moved && dragPos) {
-      // Preserve the floating composition by snapping to the nearest of three horizontal anchors.
-      const anchors = {
-        left: EDGE_MARGIN,
-        center: window.innerWidth / 2 - BUBBLE_SIZE / 2,
-        right: window.innerWidth - BUBBLE_SIZE - EDGE_MARGIN,
-      }
-      const nearestAnchor = Object.entries(anchors).reduce((nearest, [name, x]) => (
-        Math.abs(dragPos.x - x) < Math.abs(dragPos.x - anchors[nearest]) ? name : nearest
-      ), 'center')
-      setIgSnap(nearestAnchor)
+      // Snap every release to the nearest screen edge, never to the middle.
+      const bubbleCenter = dragPos.x + BUBBLE_SIZE / 2
+      setIgSnap(bubbleCenter < window.innerWidth / 2 ? 'left' : 'right')
       setIgY(dragPos.y)
       setDragPos(null)
     } else if (!state.moved) {
@@ -294,9 +287,7 @@ function App() {
   // recalculated from the current window size so it can never end up off-screen after a resize.
   const snappedX = igSnap === 'right'
     ? windowSize.width - BUBBLE_SIZE - EDGE_MARGIN
-    : igSnap === 'left'
-      ? EDGE_MARGIN
-      : windowSize.width / 2 - BUBBLE_SIZE / 2
+    : EDGE_MARGIN
 
   const defaultY = windowSize.height - BUBBLE_SIZE - EDGE_MARGIN
   const maxY = windowSize.height - BUBBLE_SIZE - EDGE_MARGIN
@@ -328,13 +319,13 @@ function App() {
           </a>
 
           <nav className="hidden items-center gap-8 md:flex">
-            <a href="#inicio" className="text-sm font-semibold text-[#2e7d32]">
+            <a href="#inicio" className="text-sm font-bold text-[#1b5e20]">
               Início
             </a>
-            <a href="#convenios" className="text-sm text-[#455547] transition hover:text-[#2e7d32]">
+            <a href="#convenios" className="text-sm font-medium text-[#30483a] transition hover:text-[#1b5e20]">
               Convênios Aceitos
             </a>
-            <a href="#unidades" className="text-sm text-[#455547] transition hover:text-[#2e7d32]">
+            <a href="#unidades" className="text-sm font-medium text-[#30483a] transition hover:text-[#1b5e20]">
               Nossas Unidades
             </a>
           </nav>
@@ -624,12 +615,12 @@ function App() {
               />
               <p className="text-lg font-semibold text-[#1b4d1e]">Fernandes Farma</p>
             </div>
-            <p className="mt-1 text-sm">Cuidando de você com acolhimento e profissionalismo</p>
+            <p className="mt-1 text-sm">Cuidando de você</p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 text-sm md:justify-end">
-            <a href="#inicio" className="transition hover:text-[#2e7d32]">Início</a>
-            <a href="#unidades" className="transition hover:text-[#2e7d32]">Unidades</a>
-            <a href="#convenios" className="transition hover:text-[#2e7d32]">Convênios Aceitos</a>
+          <div className="flex flex-wrap justify-center gap-5 text-sm font-medium text-[#30483a] md:justify-end">
+            <a href="#inicio" className="transition hover:text-[#1b5e20]">Início</a>
+            <a href="#unidades" className="transition hover:text-[#1b5e20]">Unidades</a>
+            <a href="#convenios" className="transition hover:text-[#1b5e20]">Convênios Aceitos</a>
           </div>
         </div>
       </footer>
@@ -640,12 +631,12 @@ function App() {
       {!isDesktop ? (
         <div
           ref={igRef}
-          className={`fixed z-50 ${!dragPos && igSnap === 'center' ? '-translate-x-1/2' : ''}`}
+          className={`fixed z-50 ${dragPos ? '' : 'instagram-bubble-snap'}`}
           style={{ left: `${bubbleX}px`, top: `${bubbleY}px` }}
         >
           <div
             className={`instagram-popover absolute bottom-full z-50 mb-2 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/70 bg-white p-2 shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md sm:w-80 ${
-              igSnap === 'right' ? 'right-0' : igSnap === 'left' ? 'left-0' : 'left-1/2 -translate-x-1/2'
+              igSnap === 'right' ? 'right-0' : 'left-0'
             } ${igOpen ? 'instagram-popover-open' : ''}`}
             aria-hidden={!igOpen}
           >

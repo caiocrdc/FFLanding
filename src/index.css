@@ -58,6 +58,10 @@ body {
   visibility: visible;
 }
 
+.instagram-bubble-snap {
+  transition: left 520ms cubic-bezier(0.22, 1, 0.36, 1), top 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .instagram-popover {
     transition: none;
