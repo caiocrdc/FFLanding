@@ -320,13 +320,11 @@ function App() {
       <header className="sticky top-0 z-50 border-b border-[#dfe7df] bg-[#f8faf8]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <a href="#inicio" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#2e7d32] text-lg font-semibold text-white">
-              F
-            </div>
-            <div>
-              <p className="text-base font-semibold text-[#1b4d1e]">Fernandes Farma</p>
-              <p className="text-sm text-[#5a6a5f]">Cuidando de você</p>
-            </div>
+            <img
+              src="/logo-fernandes-farma.png"
+              alt="Fernandes Farma"
+              className="h-9 w-auto max-w-[145px] object-contain sm:h-10"
+            />
           </a>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -618,7 +616,14 @@ function App() {
         <div className="pointer-events-none absolute -bottom-28 left-[18%] h-64 w-64 rounded-[46%_54%_62%_38%] bg-gradient-to-tr from-[#9ed0dc]/25 to-[#b8e7c5]/20 blur-3xl motion-safe:animate-[convenios-drift_12s_ease-in-out_infinite]" />
         <div className="mx-auto flex max-w-7xl flex-col gap-6 text-center text-[#5a6a5f] md:flex-row md:items-center md:justify-between md:text-left">
           <div>
-            <p className="text-lg font-semibold text-[#1b4d1e]">Fernandes Farma</p>
+            <div className="flex items-center justify-center gap-3 md:justify-start">
+              <img
+                src="/logo-fernandes-farma.png"
+                alt="Fernandes Farma"
+                className="h-12 w-auto max-w-[175px] object-contain"
+              />
+              <p className="text-lg font-semibold text-[#1b4d1e]">Fernandes Farma</p>
+            </div>
             <p className="mt-1 text-sm">Cuidando de você com acolhimento e profissionalismo</p>
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm md:justify-end">
