@@ -63,7 +63,7 @@ function FarmaciaPopularBadge({ compact = false }) {
 function PbmBadge({ compact = false }) {
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-[#1565c0] via-[#1976d2] to-[#1e88e5] font-semibold uppercase tracking-[0.15em] text-white shadow-[0_4px_12px_rgba(21,101,192,0.35)] ${
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#b9d9ed]/70 bg-[#d9edf8]/70 font-semibold uppercase tracking-[0.15em] text-[#18527a] shadow-[0_8px_24px_rgba(24,82,122,0.14)] backdrop-blur-md ${
         compact ? 'px-2.5 py-1 text-[10px]' : 'px-4 py-2 text-xs'
       }`}
     >
@@ -153,7 +153,7 @@ function App() {
 
   // Which edge the floating bubble is snapped to, and its vertical position.
   // igY = null means "default", i.e. anchored near the bottom.
-  const [igSnap, setIgSnap] = useState('center') // 'left' | 'center' | 'right'
+  const [igSnap, setIgSnap] = useState('right') // 'left' | 'center' | 'right'
   const [igY, setIgY] = useState(null)
   // Position used only while actively dragging (follows the finger/cursor freely).
   const [dragPos, setDragPos] = useState(null)
@@ -402,7 +402,7 @@ function App() {
         </div>
       </section>
 
-      <section id="convenios" className="relative isolate overflow-visible px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <section id="convenios" className="relative isolate overflow-x-clip px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="pointer-events-none absolute -right-20 top-12 -z-10 h-72 w-72 rounded-[46%_54%_62%_38%] bg-gradient-to-br from-[#b8e7c5]/70 to-[#9ed0dc]/30 blur-2xl motion-safe:animate-[convenios-drift_8s_ease-in-out_infinite]" />
         <div className="pointer-events-none absolute right-[13%] top-28 -z-10 hidden h-20 w-20 rotate-12 items-center justify-center rounded-full border border-white/80 bg-white/45 text-[#2e7d32]/50 shadow-[0_12px_30px_rgba(27,77,30,0.1)] backdrop-blur-md motion-safe:animate-[convenios-drift_6s_ease-in-out_infinite_reverse] md:flex">
           <FaPills className="text-2xl" />
@@ -420,7 +420,7 @@ function App() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr] md:items-start md:gap-0">
-            <div className="relative z-10 rounded-[28px_40px_28px_40px] border border-[#dfe7df] bg-white p-8 text-center shadow-[0_18px_42px_rgba(27,77,30,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(27,77,30,0.15)] md:mt-8">
+            <div className="relative z-10 rounded-[28px_40px_28px_40px] border border-[#c9ddd0] bg-white p-8 text-center shadow-[0_20px_48px_rgba(18,60,53,0.14)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_26px_58px_rgba(18,60,53,0.2)] md:mt-8">
               <div className="mb-5 flex justify-center">
                 <FarmaciaPopularBadge />
               </div>
@@ -432,13 +432,13 @@ function App() {
                 href="https://www.gov.br/saude/farmaciapopular"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-8 inline-flex items-center justify-center rounded-full bg-[#2e7d32] px-7 py-3 font-semibold text-white transition hover:scale-[0.98]"
+                className="mt-8 inline-flex items-center justify-center rounded-full border border-[#75b9c7]/60 bg-white/45 px-7 py-3 font-semibold text-[#123c35] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#75b9c7] hover:bg-white/70"
               >
                 Saiba mais sobre o programa
               </a>
             </div>
 
-            <div className="relative z-20 rounded-[36px_24px_36px_24px] border border-white/80 bg-[#eff9f1]/90 p-8 text-center shadow-[0_22px_52px_rgba(27,77,30,0.14)] backdrop-blur-md transition-all duration-300 hover:-translate-y-3 hover:shadow-[0_28px_58px_rgba(27,77,30,0.18)] md:-ml-8 md:-mt-4 lg:-ml-16">
+            <div className="relative z-20 rounded-[36px_24px_36px_24px] border border-[#c9ddd0] bg-[#eff9f1]/95 p-8 text-center shadow-[0_24px_56px_rgba(18,60,53,0.18)] backdrop-blur-md transition-all duration-300 hover:-translate-y-3 hover:shadow-[0_30px_64px_rgba(18,60,53,0.24)] md:-ml-8 md:-mt-4 lg:-ml-16">
               <div className="mb-5 flex justify-center">
                 <PbmBadge />
               </div>
@@ -448,7 +448,7 @@ function App() {
               </p>
               <a
                 href="#unidades"
-                className="mt-8 inline-flex items-center justify-center rounded-full border border-[#2e7d32] bg-white px-7 py-3 font-semibold text-[#2e7d32] transition hover:bg-[#f1f8f2]"
+                className="mt-8 inline-flex items-center justify-center rounded-full border border-[#75b9c7]/60 bg-white/45 px-7 py-3 font-semibold text-[#123c35] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#75b9c7] hover:bg-white/70"
               >
                 Consulte na sua unidade
               </a>
@@ -523,9 +523,7 @@ function App() {
                       href={unit.mapsUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className={unit.popular
-                        ? 'mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#d5e2d7] bg-[#f7faf7] px-5 py-3.5 text-sm font-semibold text-[#1b5e20] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2e7d32] hover:bg-[#eef7ef] active:scale-95'
-                        : 'mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition-all duration-300 hover:scale-[0.98] active:scale-95'}
+                      className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition-all duration-300 hover:scale-[0.98] active:scale-95"
                     >
                       <FaMapMarkerAlt className="h-4 w-4" />
                       Ver no Mapa
