@@ -48,15 +48,13 @@ export default function Header({
               className={`menu-popover absolute right-0 z-50 mt-2 w-60 max-w-[calc(100vw-2rem)] rounded-xl border border-white/70 bg-white p-2 shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md ${menuOpen ? 'menu-popover-open' : ''}`}
               aria-hidden={!menuOpen}
             >
-              {navLinks.map((link, index) => (
+              {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   tabIndex={menuOpen ? 0 : -1}
-                  className={`block rounded-lg px-3 py-3 text-sm leading-snug transition hover:bg-[#e7f4eb] active:bg-[#d8eddf] ${
-                    index === 0 ? 'font-semibold text-[#1b5e20]' : 'text-[#455547] hover:text-[#2e7d32]'
-                  }`}
+                  className="block rounded-lg px-3 py-3 text-sm leading-snug text-[#455547] transition hover:bg-[#e7f4eb] hover:text-[#2e7d32] active:bg-[#d8eddf]"
                 >
                   {link.label}
                 </a>
