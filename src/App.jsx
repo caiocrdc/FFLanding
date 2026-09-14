@@ -23,6 +23,8 @@ function App() {
 
   const [igOpen, setIgOpen] = useState(false)
   const igRef = useRef(null)
+  const [whatsappOpen, setWhatsappOpen] = useState(false)
+  const whatsappRef = useRef(null)
 
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
@@ -58,6 +60,30 @@ function App() {
       document.removeEventListener('keydown', handleEscape)
     }
   }, [igOpen])
+
+  useEffect(() => {
+    if (!whatsappOpen) return
+
+    function handleClickOutside(event) {
+      if (whatsappRef.current && !whatsappRef.current.contains(event.target)) {
+        setWhatsappOpen(false)
+      }
+    }
+
+    function handleEscape(event) {
+      if (event.key === 'Escape') setWhatsappOpen(false)
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [whatsappOpen])
 
   useEffect(() => {
     if (!menuOpen) return
@@ -125,7 +151,7 @@ function App() {
       setIgY(dragPos.y)
       setDragPos(null)
     } else if (!state.moved) {
-      setIgOpen((s) => !s)
+      setWhatsappOpen((s) => !s)
     }
   }
 
@@ -155,7 +181,6 @@ function App() {
         </div>
       </div>
       <Header
-        isDesktop={isDesktop}
         igOpen={igOpen}
         setIgOpen={setIgOpen}
         igRef={igRef}
@@ -172,13 +197,13 @@ function App() {
 
       <FooterSection sectionRef={footerRef} isVisible={footerVisible} />
 
-      {/* Draggable floating Instagram bubble — mobile only. Defaults to bottom-right and
+      {/* Draggable floating WhatsApp bubble — mobile only. Defaults to bottom-right and
           always snaps back to the nearest screen edge when released; it's re-clamped on
           every resize so it can never end up hidden past the edge of a shrunk window. */}
       {!isDesktop ? (
         <FloatingInstagram
-          igRef={igRef}
-          igOpen={igOpen}
+          whatsappRef={whatsappRef}
+          whatsappOpen={whatsappOpen}
           igSnap={igSnap}
           isDragging={Boolean(dragPos)}
           bubbleX={bubbleX}
@@ -187,7 +212,7 @@ function App() {
           onPointerMove={handleBubblePointerMove}
           onPointerUp={finishDrag}
           onPointerCancel={finishDrag}
-          onNavigate={() => setIgOpen(false)}
+          onNavigate={() => setWhatsappOpen(false)}
         />
       ) : null}
     </div>

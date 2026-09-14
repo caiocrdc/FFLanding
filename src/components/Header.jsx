@@ -4,7 +4,6 @@ import { navLinks } from '../data/siteData'
 import logo from '../assets/logo-fernandes-farma.png'
 
 export default function Header({
-  isDesktop,
   igOpen,
   setIgOpen,
   igRef,
@@ -24,9 +23,6 @@ export default function Header({
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
-          <a href="#inicio" className="text-sm font-bold text-[#1b5e20]">
-            Início
-          </a>
           <a href="#convenios" className="text-sm font-medium text-[#30483a] transition hover:text-[#1b5e20]">
             Convênios Aceitos
           </a>
@@ -68,27 +64,25 @@ export default function Header({
             </div>
           </div>
 
-          {isDesktop ? (
-            <div className="relative" ref={igRef}>
-              <button
-                onClick={() => setIgOpen((s) => !s)}
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-[#2e7d32] text-white transition hover:scale-105 active:scale-95"
-                aria-label="Instagram"
-                aria-expanded={igOpen}
-                aria-haspopup="true"
-                type="button"
-              >
-                <FaInstagram className="h-5 w-5" />
-              </button>
+          <div className="relative" ref={igRef}>
+            <button
+              onClick={() => setIgOpen((s) => !s)}
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#2e7d32] text-white transition hover:scale-105 active:scale-95"
+              aria-label="Instagram"
+              aria-expanded={igOpen}
+              aria-haspopup="true"
+              type="button"
+            >
+              <FaInstagram className="h-5 w-5" />
+            </button>
 
-              <div
-                className={`instagram-popover absolute right-0 z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/70 bg-white p-2 shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md sm:w-80 ${igOpen ? 'instagram-popover-open' : ''}`}
-                aria-hidden={!igOpen}
-              >
-                <InstagramLinks onNavigate={() => setIgOpen(false)} isOpen={igOpen} />
-              </div>
+            <div
+              className={`instagram-popover absolute right-0 z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/70 bg-white p-2 shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md sm:w-80 ${igOpen ? 'instagram-popover-open' : ''}`}
+              aria-hidden={!igOpen}
+            >
+              <InstagramLinks onNavigate={() => setIgOpen(false)} isOpen={igOpen} />
             </div>
-          ) : null}
+          </div>
         </div>
       </div>
     </header>

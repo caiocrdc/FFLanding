@@ -1,6 +1,6 @@
 import { FaCheckCircle, FaClock, FaMapMarkerAlt, FaPills, FaWhatsapp } from 'react-icons/fa'
 import { FarmaciaPopularBadge, PbmBadge } from '../components/ProgramBadges'
-import { locations, WHATSAPP_URL } from '../data/siteData'
+import { locations } from '../data/siteData'
 
 export default function UnitsSection({ sectionRef, isVisible }) {
   return (
@@ -73,36 +73,32 @@ export default function UnitsSection({ sectionRef, isVisible }) {
                     </div>
                   </div>
 
-                  <a
-                    href={unit.mapsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition-all duration-300 hover:scale-[0.98] active:scale-95"
-                  >
-                    <FaMapMarkerAlt className="h-4 w-4" />
-                    Ver no Mapa
-                  </a>
+                  <div className="mt-8 grid gap-3">
+                    <a
+                      href={unit.mapsUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1b5e20] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(27,94,32,0.4)] transition-all duration-300 hover:scale-[0.98] active:scale-95"
+                    >
+                      <FaMapMarkerAlt className="h-4 w-4" />
+                      Ver no Mapa
+                    </a>
+                    <a
+                      href={unit.whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#2e7d32] bg-white px-5 py-3.5 text-sm font-semibold text-[#2e7d32] transition-all duration-300 hover:scale-[0.98] hover:bg-[#f1f8f2] active:scale-95"
+                    >
+                      <FaWhatsapp className="h-4 w-4" />
+                      Entrar em contato
+                    </a>
+                  </div>
                 </article>
               </div>
             )
           })}
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-4 rounded-[26px] border border-[#dfe7df] bg-white p-6 text-center shadow-sm sm:flex-row sm:justify-between sm:p-8 sm:text-left">
-          <div>
-            <h3 className="text-lg font-semibold text-[#1b4d1e]">Prefere falar direto com a gente?</h3>
-            <p className="mt-1 text-sm text-[#5a6a5f]">Fale com nossa equipe pelo WhatsApp e tire suas dúvidas rapidinho.</p>
-          </div>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#2e7d32] bg-white px-6 py-3 text-sm font-semibold text-[#2e7d32] transition hover:bg-[#f1f8f2] active:scale-95 sm:w-auto"
-          >
-            <FaWhatsapp className="h-4 w-4" />
-            Falar no WhatsApp
-          </a>
-        </div>
       </div>
     </section>
   )

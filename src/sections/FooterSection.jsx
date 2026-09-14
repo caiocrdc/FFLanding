@@ -1,3 +1,4 @@
+import { FaInstagram } from 'react-icons/fa'
 import logo from '../assets/logo-fernandes-farma.png'
 
 export default function FooterSection({ sectionRef, isVisible }) {
@@ -20,9 +21,31 @@ export default function FooterSection({ sectionRef, isVisible }) {
           <p className="mt-1 text-sm">Cuidando de você</p>
         </div>
         <div className="flex flex-wrap justify-center gap-5 text-sm font-medium text-[#30483a] md:justify-end">
-          <a href="#inicio" className="transition hover:text-[#1b5e20]">Início</a>
           <a href="#unidades" className="transition hover:text-[#1b5e20]">Unidades</a>
           <a href="#convenios" className="transition hover:text-[#1b5e20]">Convênios Aceitos</a>
+        </div>
+        <div className="flex flex-col items-center gap-2 text-sm text-[#30483a] md:items-start">
+          <p className="font-semibold text-[#1b4d1e]">Acesse nossos Instagrams</p>
+          <div className="flex flex-wrap justify-center gap-3 md:justify-start">
+            <a
+              href="https://www.instagram.com/fernandesfarma"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 transition hover:text-[#1b5e20]"
+            >
+              <FaInstagram className="h-4 w-4" />
+              @fernandesfarma
+            </a>
+            <a
+              href="https://www.instagram.com/fernandesfarmaredonda"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 transition hover:text-[#1b5e20]"
+            >
+              <FaInstagram className="h-4 w-4" />
+              @fernandesfarmaredonda
+            </a>
+          </div>
         </div>
       </div>
     </footer>
