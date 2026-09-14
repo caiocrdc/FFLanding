@@ -25,6 +25,8 @@ function App() {
   const igRef = useRef(null)
   const [whatsappOpen, setWhatsappOpen] = useState(false)
   const whatsappRef = useRef(null)
+  const [desktopWhatsappOpen, setDesktopWhatsappOpen] = useState(false)
+  const desktopWhatsappRef = useRef(null)
 
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
@@ -84,6 +86,30 @@ function App() {
       document.removeEventListener('keydown', handleEscape)
     }
   }, [whatsappOpen])
+
+  useEffect(() => {
+    if (!desktopWhatsappOpen) return
+
+    function handleClickOutside(event) {
+      if (desktopWhatsappRef.current && !desktopWhatsappRef.current.parentElement?.contains(event.target)) {
+        setDesktopWhatsappOpen(false)
+      }
+    }
+
+    function handleEscape(event) {
+      if (event.key === 'Escape') setDesktopWhatsappOpen(false)
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [desktopWhatsappOpen])
 
   useEffect(() => {
     if (!menuOpen) return
@@ -184,6 +210,9 @@ function App() {
         igOpen={igOpen}
         setIgOpen={setIgOpen}
         igRef={igRef}
+        desktopWhatsappOpen={desktopWhatsappOpen}
+        setDesktopWhatsappOpen={setDesktopWhatsappOpen}
+        desktopWhatsappRef={desktopWhatsappRef}
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
         menuRef={menuRef}

@@ -1,5 +1,5 @@
 import { FaPills } from 'react-icons/fa'
-import { FarmaciaPopularBadge, PbmBadge } from '../components/ProgramBadges'
+import farmapopLogo from '../assets/farmapop.png'
 
 export default function ConveniosSection({ sectionRef, isVisible }) {
   return (
@@ -24,41 +24,62 @@ export default function ConveniosSection({ sectionRef, isVisible }) {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr] md:items-start md:gap-0">
-          <div className="relative z-10 rounded-[28px_40px_28px_40px] border border-[#c9ddd0] bg-white p-8 text-center shadow-[0_20px_48px_rgba(18,60,53,0.14)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_26px_58px_rgba(18,60,53,0.2)] md:mt-8">
-            <div className="mb-5 flex justify-center">
-              <FarmaciaPopularBadge />
+        <div className="grid gap-6 md:grid-cols-2 md:items-start">
+          <div className="relative z-10 overflow-hidden rounded-[28px_40px_28px_40px] border border-[#e8c3c3] border-t-4 border-t-[#c62828] bg-gradient-to-br from-white via-white to-[#fff5f5] p-8 text-center shadow-[0_20px_48px_rgba(198,40,40,0.12)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_26px_58px_rgba(198,40,40,0.2)] md:mt-8">
+            <div className="flex -translate-x-1 flex-wrap items-center justify-center gap-2">
+              <img
+                src={farmapopLogo}
+                alt="Farmácia Popular"
+                className="h-11 w-24 shrink-0 object-contain"
+              />
+              <h3 className="text-2xl font-bold text-[#a91f1f]">Aqui tem Farmácia Popular</h3>
             </div>
-            <h3 className="text-2xl font-bold text-[#1b4d1e]">Aqui tem Farmácia Popular</h3>
             <p className="mx-auto mt-4 max-w-md text-[#5a6a5f]">
               Nossa unidade do Centro é credenciada ao programa, oferecendo medicamentos gratuitos ou com até 90% de desconto para você e sua família.
             </p>
-            <a
-              href="https://www.gov.br/saude/farmaciapopular"
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-flex items-center justify-center rounded-full border border-[#75b9c7]/60 bg-white/45 px-7 py-3 font-semibold text-[#123c35] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#75b9c7] hover:bg-white/70"
-            >
-              Saiba mais sobre o programa
-            </a>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href="https://www.gov.br/saude/farmaciapopular"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full border border-[#75b9c7]/60 bg-white/45 px-7 py-3 font-semibold text-[#123c35] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#75b9c7] hover:bg-white/70 sm:w-auto"
+              >
+                Saiba mais sobre o programa
+              </a>
+              <a
+                href="https://www.portaldapopular.com.br/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full bg-[#c62828] px-7 py-3 font-semibold text-white shadow-[0_6px_20px_rgba(198,40,40,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d32f2f] sm:w-auto"
+              >
+                Portal da popular
+              </a>
+            </div>
           </div>
 
-          <div className="relative z-20 rounded-[36px_24px_36px_24px] border border-[#c9ddd0] bg-[#eff9f1]/95 p-8 text-center shadow-[0_24px_56px_rgba(18,60,53,0.18)] backdrop-blur-md transition-all duration-300 hover:-translate-y-3 hover:shadow-[0_30px_64px_rgba(18,60,53,0.24)] md:-ml-8 md:-mt-4 lg:-ml-16">
-            <div className="mb-5 flex justify-center">
-              <PbmBadge />
-            </div>
-            <h3 className="text-2xl font-bold text-[#1b4d1e]">PBM — Descontos em Medicamentos</h3>
+          <div className="relative z-20 overflow-hidden rounded-[36px_24px_36px_24px] border border-[#b9d9ed] border-t-4 border-t-[#18527a] bg-gradient-to-br from-[#f7fcff] via-[#eff9f1] to-[#e6f2fa] p-8 text-center shadow-[0_24px_56px_rgba(24,82,122,0.16)] backdrop-blur-md transition-all duration-300 hover:-translate-y-3 hover:shadow-[0_30px_64px_rgba(24,82,122,0.24)] md:-mt-4 md:-translate-x-10">
+            <h3 className="text-2xl font-bold text-[#18527a]">PBM — Descontos em Medicamentos</h3>
             <p className="mx-auto mt-4 max-w-md text-[#5a6a5f]">
               Também participamos do PBM (Programa de Benefício em Medicamentos), com descontos oferecidos pelos laboratórios em diversos medicamentos de uso contínuo.
             </p>
-            <a
-              href="https://pbm.portaldadrogaria.com.br/blog/pbm-tudo-o-que-voce-precisa-saber"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center rounded-full border border-[#75b9c7]/60 bg-white/45 px-7 py-3 font-semibold text-[#123c35] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#75b9c7] hover:bg-white/70"
-            >
-              Saiba mais sobre o programa
-            </a>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href="https://pbm.portaldadrogaria.com.br/blog/pbm-tudo-o-que-voce-precisa-saber"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full border border-[#75b9c7]/60 bg-white/45 px-7 py-3 font-semibold text-[#123c35] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#75b9c7] hover:bg-white/70 sm:w-auto"
+              >
+                Saiba mais sobre o programa
+              </a>
+              <a
+                href="https://www.portaldopbm.com.br/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full bg-[#18527a] px-7 py-3 font-semibold text-white shadow-[0_6px_20px_rgba(24,82,122,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#216a9d] sm:w-auto"
+              >
+                Portal do PBM
+              </a>
+            </div>
           </div>
         </div>
       </div>

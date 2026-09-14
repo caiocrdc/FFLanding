@@ -1,12 +1,15 @@
-import { FaBars, FaInstagram, FaTimes } from 'react-icons/fa'
+import { FaBars, FaInstagram, FaTimes, FaWhatsapp } from 'react-icons/fa'
 import InstagramLinks from './InstagramLinks'
-import { navLinks } from '../data/siteData'
+import { locations, navLinks } from '../data/siteData'
 import logo from '../assets/logo-fernandes-farma.png'
 
 export default function Header({
   igOpen,
   setIgOpen,
   igRef,
+  desktopWhatsappOpen,
+  setDesktopWhatsappOpen,
+  desktopWhatsappRef,
   menuOpen,
   setMenuOpen,
   menuRef,
@@ -79,6 +82,42 @@ export default function Header({
               aria-hidden={!igOpen}
             >
               <InstagramLinks onNavigate={() => setIgOpen(false)} isOpen={igOpen} />
+            </div>
+          </div>
+
+          <div className="relative hidden md:block">
+            <button
+              onClick={() => setDesktopWhatsappOpen((open) => !open)}
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#2e7d32] text-white transition hover:scale-105 active:scale-95"
+              aria-label="WhatsApp"
+              aria-expanded={desktopWhatsappOpen}
+              aria-haspopup="true"
+              type="button"
+            >
+            <FaWhatsapp className="h-5 w-5" />
+            </button>
+            <div
+              ref={desktopWhatsappRef}
+              className={`instagram-popover absolute right-0 top-full z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/70 bg-white p-2 text-left shadow-[0_16px_40px_rgba(18,60,53,0.16)] backdrop-blur-md sm:w-80 ${desktopWhatsappOpen ? 'instagram-popover-open' : ''}`}
+              aria-hidden={!desktopWhatsappOpen}
+            >
+              {locations.map((unit, index) => (
+                <a
+                  key={unit.title}
+                  href={unit.whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setDesktopWhatsappOpen(false)}
+                  tabIndex={desktopWhatsappOpen ? 0 : -1}
+                  className={`block rounded-lg px-3 py-3 text-sm leading-snug text-[#1b4d1e] transition hover:bg-[#f1f8f2] active:bg-[#e9f4ea] ${index > 0 ? 'mt-1' : ''}`}
+                >
+                  <span className="flex items-center gap-2 font-semibold">
+                    <FaWhatsapp className="h-4 w-4 text-[#2e7d32]" />
+                    {unit.title}
+                  </span>
+                  <span className="mt-1 block text-[#2e7d32]">Entrar em contato</span>
+                </a>
+              ))}
             </div>
           </div>
         </div>

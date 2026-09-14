@@ -1,4 +1,5 @@
-import { FaPills, FaTags } from 'react-icons/fa'
+import { FaTags } from 'react-icons/fa'
+import farmapopLogo from '../assets/farmapop.png'
 
 export function FarmaciaPopularBadge({ compact = false }) {
   return (
@@ -7,7 +8,11 @@ export function FarmaciaPopularBadge({ compact = false }) {
         compact ? 'px-2.5 py-1 text-[10px]' : 'px-4 py-2 text-xs'
       }`}
     >
-      <FaPills className={compact ? 'text-xs' : 'text-sm'} />
+      <img
+        src={farmapopLogo}
+        alt=""
+        className={compact ? 'h-5 w-5 object-contain' : 'h-6 w-6 object-contain'}
+      />
       Farmácia Popular
     </span>
   )
