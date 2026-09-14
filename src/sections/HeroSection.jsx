@@ -21,7 +21,7 @@ export default function HeroSection() {
           <div className="relative z-10 flex h-full min-h-[480px] flex-col justify-center px-6 py-12 text-white sm:min-h-[540px] sm:px-10 sm:py-14 lg:min-h-[650px] lg:px-16 lg:py-20">
             <div className="mb-7 inline-flex w-fit items-center rounded-full border border-white/25 bg-white/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#e2f5e9] shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md">
               <FaShieldAlt className="mr-2 text-base" />
-              Farmácia com credibilidade e acolhimento
+              Desde 2019, cuidando de você
             </div>
             <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
               Sua saúde em boas mãos
