@@ -1,4 +1,5 @@
 import { FaShieldAlt } from 'react-icons/fa'
+import heroImage from '../assets/herofarma.jpg'
 
 export default function HeroSection() {
   return (
@@ -8,8 +9,8 @@ export default function HeroSection() {
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem_3.5rem_2rem_3.5rem] border border-white/70 bg-[#123c35] shadow-[0_24px_70px_rgba(18,60,53,0.2)] sm:rounded-[2.5rem_4.5rem_2.5rem_4.5rem]">
         <div className="relative min-h-[480px] overflow-hidden sm:min-h-[540px] lg:min-h-[650px]">
           <img
-            src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1400&q=80"
-            alt="Ambiente profissional de farmácia"
+            src={heroImage}
+            alt="Ambiente de farmácia"
             className="absolute inset-0 h-full w-full object-cover object-[58%_center] transition-transform duration-[1200ms] ease-out hover:scale-105"
           />
           <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(8,47,39,0.94)_0%,rgba(18,60,53,0.76)_43%,rgba(18,60,53,0.18)_100%)]" />
